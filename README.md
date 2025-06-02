@@ -1,50 +1,109 @@
-# Welcome to your Expo app 👋
+# todo-challenge-app
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicativo ToDo desenvolvido com Expo, React Native e Expo Router, focado em uma experiência multiplataforma (iOS, Android e Web) com uma interface moderna e responsiva.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Como rodar o projeto
 
-   ```bash
-   npm install
-   ```
+### Pré-requisitos
 
-2. Start the app
+- Node.js (recomendado LTS)
+- Expo
+- Android Studio / Xcode (para emulação de Android/iOS) ou Dispositivo físico
 
-   ```bash
-   npx expo start
-   ```
+### Passos para iniciar
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+1. Clone o repositório:
 
 ```bash
-npm run reset-project
+git clone https://github.com/omateusamaral/todo-challenge-app
+cd todo-challenge-app
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Instale as dependências:
 
-## Learn more
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+3. Rode o projeto:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- Para iniciar no modo desenvolvimento (com túnel para acesso remoto):
 
-## Join the community
+```bash
+npm run start
+```
 
-Join our community of developers creating universal apps.
+- Para rodar no Android:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npm run android
+
+```
+
+- Para rodar no iOS:
+
+```bash
+npm run ios
+
+```
+
+- Para rodar no navegador Web:
+
+```bash
+npm run web
+
+```
+
+## 🧰 Tecnologias e decisões técnicas
+
+### Expo & React Native
+
+- **Expo**: Simplifica o desenvolvimento multiplataforma, acelerando o processo sem a necessidade de configurar ambientes nativos complexos.
+- **React Native**: Framework principal para construir interfaces nativas para iOS e Android usando React.
+
+### Navegação
+
+- **expo-router**: Usado para facilitar o roteamento baseado em arquivos, permitindo navegação declarativa e estrutura de pastas intuitiva.
+
+### UI e Estilização
+
+- **nativewind + tailwindcss**: Para estilização rápida e consistente utilizando classes utilitárias, seguindo o paradigma Tailwind CSS no React Native.
+
+- **@expo/vector-icons**: Ícones vetoriais de alta qualidade, otimizados para performance e aparência nativa.
+
+### Estado e Formulários
+
+- **formik + yup**: Gerenciamento de formulários e validação robusta e declarativa, simplificando o controle de inputs e erros.
+
+### Performance e UX
+
+- **react-native-reanimated** e **react-native-gesture-handler**: Para animações suaves e gestos responsivos.
+- **use-debounce**: Otimização em inputs com debounce para evitar execuções excessivas em buscas e filtros.
+
+### Armazenamento e Dados
+
+- **@react-native-async-storage/async-storage**: Para armazenamento local persistente, garantindo que os dados do usuário (ex: tarefas) sejam mantidos mesmo após o app ser fechado.
+
+### Desenvolvimento e Qualidade
+
+- **typescript**: Tipagem estática para maior robustez no código.
+- **eslint + eslint-config-expo**: Padronização de código e prevenção de erros comuns.
+- **@babel/core**: Transpila o código para compatibilidade com várias versões de JS.
+
+---
+
+## Estrutura dos scripts
+
+- `start`: Inicializa o projeto no Expo com túnel para acesso remoto (útil para testes em dispositivos físicos).
+- `android`: Compila e executa o app em um dispositivo ou emulador Android.
+- `ios`: Compila e executa o app em um dispositivo ou simulador iOS.
+- `web`: Inicia o projeto para rodar no navegador.
+- `lint`: Roda o ESLint para análise e padronização do código.
+
+---
+
+Qualquer dúvida ou contribuição, fique à vontade para abrir uma issue ou pull request!
+
+---

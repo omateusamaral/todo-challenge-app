@@ -43,7 +43,7 @@ export default function CreateTodo() {
           <>
             <TextInput
               placeholder="Título"
-              className="border border-gray-950 rounded-lg p-4 bg-[#05243E]  color-white text-sm mb-4"
+              className="border border-gray-950 rounded-lg p-4  h-20 bg-[#05243E]  color-white text-sm mb-4"
               onChangeText={handleChange("title")}
               onBlur={handleBlur("title")}
               value={values.title}
