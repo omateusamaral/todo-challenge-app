@@ -1,12 +1,11 @@
-import { ScrollView } from "react-native";
+import { View } from "react-native";
 import Header from "../components/header";
+import TaskList from "../components/taskList";
 export default function Index() {
   return (
-    <ScrollView
-      className="flex-1 bg-gradient-to-t from-[#0d3b6c] to-[#1251a6]"
-      showsVerticalScrollIndicator={false}
-    >
+    <View className="flex-1">
       <Header />
-    </ScrollView>
+      <TaskList />
+    </View>
   );
 }
