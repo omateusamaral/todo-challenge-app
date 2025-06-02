@@ -34,7 +34,7 @@ Resposta: No aplicativo de fretagem, eu precisava compartilhar estado do usuári
 Pergunta:Explique como configuraria o roteamento entre páginas em um aplicativo
 React Native. Cite as bibliotecas que utilizaria e por quê.
 
-Resposta: Para configurar o roteamento entre telas em React Native, costumo utilizar a biblioteca React Navigation, que é a mais popular e robusta da comunidade. Utilizo o stack navigator para navegação padrão entre telas (push/pop). Para abas, uso o bottom tab navigator. A utilização do mesmo é ideal por conta que é amplamente usado na comunidade, fácil integração com react.
+Resposta: Para configurar o roteamento entre telas em React Native, costumo utilizar a biblioteca React Navigation, que é a mais popular e robusta da comunidade. Utilizo o stack navigator para navegação padrão entre telas (push/pop). Para abas, uso o bottom tab navigator. A utilização do mesmo é ideal por conta que é amplamente usado na comunidade, fácil integração com react. Hoje em dia temos o EXPO que facilita ainda mais o processo de configuração de páginas.
 ```
 
 ```
