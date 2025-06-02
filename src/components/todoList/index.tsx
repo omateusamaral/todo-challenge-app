@@ -5,22 +5,25 @@ import { Todo } from "../../interfaces/todo.interface";
 import TodoItem from "../todoItem";
 
 export default function TodoList() {
-  const { todos, removeAllCompletedTodos } = useTodos();
-  console.log(todos);
+  const { filteredTodos, filteredCompletedTodos, removeAllCompletedTodos } =
+    useTodos();
   return (
-    <View className="flex-1">
-      <View className="flex-row justify-between py-2">
-        <Text className="text-white p-4">Lista de Tarefas</Text>
-        {todos.length > 0 && (
+    <View className="flex-1 ">
+      <View className="flex-row items-center justify-between  px-2 py-4">
+        <View className="w-3/5">
+          <Text className="text-white">Lista de Tarefas</Text>
+        </View>
+        {filteredCompletedTodos.length > 0 && (
           <TouchableOpacity onPress={removeAllCompletedTodos}>
-            <View className="bg-[#05243E] rounded-lg p-2 border border-gray-950">
+            <View className="bg-[#05243E] rounded-lg p-4 border border-gray-950">
               <Text className="text-white">Limpar Concluídas</Text>
             </View>
           </TouchableOpacity>
         )}
       </View>
+
       <FlatList
-        data={todos}
+        data={filteredTodos}
         renderItem={({ item }: { item: Todo }) => <TodoItem todo={item} />}
         keyExtractor={(item) => item.todoId}
         initialNumToRender={10}
@@ -32,7 +35,7 @@ export default function TodoList() {
         ListEmptyComponent={() => (
           <View className="flex-1 items-center justify-center">
             <Text className="text-white text-lg">
-              Nenhuma tarefa encontrada
+              Adicione uma tarefa para começar!
             </Text>
           </View>
         )}

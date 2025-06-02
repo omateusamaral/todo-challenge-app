@@ -1,94 +1,88 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, {
   createContext,
   ReactNode,
   useContext,
-  useEffect,
+  useMemo,
   useState,
 } from "react";
-import { Alert } from "react-native";
-import uuid from "react-native-uuid";
+import { useDebounce } from "use-debounce";
 import { Todo } from "../interfaces/todo.interface";
 
 type TodoContextType = {
-  todos: Todo[];
-  selectedTodo: Todo | null;
   addTodo: (title: string, description: string) => void;
-  changeTodoStatus: (todoId: string) => void;
   removeAllCompletedTodos: () => void;
+  changeTodoStatus: (todoId: string) => void;
+  selectedTodo: Todo | null;
   selectTodo: (todo: Todo) => void;
   clearSelectedTodo: () => void;
+
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  filteredTodos: Todo[];
+  filteredCompletedTodos: Todo[];
 };
 
 const TodoContext = createContext<TodoContextType | undefined>(undefined);
-const TODOS_KEY = "@todos_key";
 
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  useEffect(() => {
-    const loadTodos = async () => {
-      try {
-        const stored = await AsyncStorage.getItem(TODOS_KEY);
-        if (stored) setTodos(JSON.parse(stored));
-      } catch (e) {
-        console.error("Erro ao carregar todos", e);
-        Alert.alert("Erro ao carregar todos");
-      }
-    };
-    loadTodos();
-  }, []);
-
-  const saveTodos = async (newTodos: Todo[]) => {
-    try {
-      await AsyncStorage.setItem(TODOS_KEY, JSON.stringify(newTodos));
-    } catch (e) {
-      console.error("Erro ao salvar todos", e);
-      Alert.alert("Erro ao salvar todos");
-    }
-  };
+  const debouncedSearchQuery = useDebounce(searchQuery, 400);
 
   const addTodo = (title: string, description: string) => {
     const newTodo: Todo = {
-      todoId: uuid.v4() as string,
+      todoId: String(Date.now()),
       title,
       description,
       completed: false,
       createdAt: new Date(),
     };
-    const newTodos = [...todos, newTodo];
-    setTodos(newTodos);
-    saveTodos(newTodos);
-  };
-
-  const changeTodoStatus = (todoId: string) => {
-    const newTodos = todos.map((todo) =>
-      todo.todoId === todoId ? { ...todo, completed: !todo.completed } : todo
-    );
-    setTodos(newTodos);
-    saveTodos(newTodos);
+    setTodos((prev) => [...prev, newTodo]);
   };
 
   const removeAllCompletedTodos = () => {
-    const newTodos = todos.filter((t) => !t.completed);
-    setTodos(newTodos);
-    saveTodos(newTodos);
+    setTodos((prev) => prev.filter((t) => !t.completed));
+  };
+
+  const changeTodoStatus = (todoId: string) => {
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.todoId === todoId ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
   };
 
   const selectTodo = (todo: Todo) => setSelectedTodo(todo);
   const clearSelectedTodo = () => setSelectedTodo(null);
 
+  const filteredTodos = useMemo(() => {
+    if (!debouncedSearchQuery[0].trim()) {
+      return todos;
+    }
+    return todos.filter((todo) =>
+      todo.title.toLowerCase().includes(debouncedSearchQuery[0].toLowerCase())
+    );
+  }, [todos, debouncedSearchQuery]);
+
+  const filteredCompletedTodos = useMemo(() => {
+    return filteredTodos.filter((todo) => todo.completed);
+  }, [filteredTodos]);
+
   return (
     <TodoContext.Provider
       value={{
-        todos,
-        selectedTodo,
         addTodo,
-        changeTodoStatus,
         removeAllCompletedTodos,
+        changeTodoStatus,
+        selectedTodo,
         selectTodo,
         clearSelectedTodo,
+        searchQuery,
+        setSearchQuery,
+        filteredTodos,
+        filteredCompletedTodos,
       }}
     >
       {children}
