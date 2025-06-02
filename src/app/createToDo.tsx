@@ -1,13 +1,24 @@
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import React from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useTodos } from "../contexts/TodoContext";
 import { TodoSchema } from "../schemas/todo.schema";
 export default function CreateTodo() {
   const router = useRouter();
+  const useTodo = useTodos();
 
   function handleClose(resetForm: () => void) {
     resetForm();
+    router.back();
+  }
+
+  function handleSave(values: { title: string; description: string }) {
+    useTodo.addTodo(values.title, values.description);
+    Alert.alert(
+      "Tarefa criada com sucesso!",
+      "Sua tarefa foi adicionada à lista."
+    );
     router.back();
   }
   return (
@@ -18,7 +29,7 @@ export default function CreateTodo() {
       <Formik
         initialValues={{ title: "", description: "" }}
         validationSchema={TodoSchema}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={handleSave}
       >
         {({
           handleChange,
@@ -53,6 +64,7 @@ export default function CreateTodo() {
               multiline={true}
               numberOfLines={5}
               placeholderTextColor="white"
+              maxLength={200}
             />
             {errors.description && touched.description && (
               <Text className="color-red-500 mb-3">{errors.description}</Text>
@@ -60,7 +72,7 @@ export default function CreateTodo() {
 
             <View className="flex-row mt-4 justify-around w-full items-center gap-2">
               <TouchableOpacity
-                onPress={handleClose.bind(null, resetForm)}
+                onPress={() => handleClose(resetForm)}
                 className="border-[#0EA5E9] border rounded-lg p-4 mb-4 w-6/12 items-center justify-center"
               >
                 <Text className="text-[#05243E] text-center text-lg">
