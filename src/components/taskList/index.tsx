@@ -10,8 +10,9 @@ export default function TaskList() {
         <Text className="text-white p-4">0/0</Text>
       </View>
       <FlatList
-        data={Array.from({ length: 100 }, (_, i) => ({ id: i.toString() }))}
+        data={Array.from({ length: 10 }, (_, i) => ({ id: i.toString() }))}
         renderItem={({ item }) => <Task />}
+        keyExtractor={(item) => item.id}
         initialNumToRender={10}
         maxToRenderPerBatch={10}
         windowSize={5}
