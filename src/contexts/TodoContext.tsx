@@ -6,23 +6,10 @@ import React, {
   useState,
 } from "react";
 import { useDebounce } from "use-debounce";
+import { TodoContextInterface } from "../interfaces/todo-context.interface";
 import { Todo } from "../interfaces/todo.interface";
 
-type TodoContextType = {
-  addTodo: (title: string, description: string) => void;
-  removeAllCompletedTodos: () => void;
-  changeTodoStatus: (todoId: string) => void;
-  selectedTodo: Todo | null;
-  selectTodo: (todo: Todo) => void;
-  clearSelectedTodo: () => void;
-
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  filteredTodos: Todo[];
-  filteredCompletedTodos: Todo[];
-};
-
-const TodoContext = createContext<TodoContextType | undefined>(undefined);
+const TodoContext = createContext<TodoContextInterface | undefined>(undefined);
 
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
