@@ -33,6 +33,13 @@ npm install
 
 ```bash
 npm run start
+
+Aperte a tecla "a" para executar o app no emulador Android instalado no seu computador.
+
+Ou, se preferir rodar no celular:
+
+- Android: escaneie o QR Code usando o aplicativo Expo Go (já instalado a partir da loja de aplicativos).
+- iPhone: abra a câmera, escaneie o QR Code e siga as instruções. Lembre-se de já ter o aplicativo Expo Go instalado a partir da App Store.
 ```
 
 - Para rodar no Android:
